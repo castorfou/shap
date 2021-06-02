@@ -5,8 +5,11 @@ dependencies:
   - python=3.7
   - shap
   - jupyter
-  - catboost
   - lightgbm
+  - catboost
   - xgboost
   - matplotlib
-prefix: /home/guillaume/anaconda3/envs/shap
+  - graphviz
+  - python-graphviz
+  - econml
+prefix: /home/explore/miniconda3/envs/shap

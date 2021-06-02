@@ -153,7 +153,7 @@ shap.plots.waterfall(shap_values[sample_ind], max_display=14)
 # 
 # The reason the partial dependence plots of linear models have such a close connection to SHAP values is because each feature in the model is handled independently of every other feature (the effects are just added together). We can keep this additive nature while relaxing the linear requirement of straight lines. This results in the well-known class of generalized additive models (GAMs). While there are many ways to train these types of models (like setting an XGBoost model to depth-1), we will use InterpretMLs explainable boosting machines that are specifically designed for this.
 
-# In[13]:
+# In[8]:
 
 
 # fit a GAM model to the data
@@ -173,20 +173,20 @@ fig,ax = shap.partial_dependence_plot(
 )
 
 
-# In[8]:
+# In[9]:
 
 
 shap.plots.scatter(shap_values_ebm[:,"RM"])
 
 
-# In[9]:
+# In[10]:
 
 
 # the waterfall_plot shows how we get from explainer.expected_value to model.predict(X)[sample_ind]
 shap.plots.waterfall(shap_values_ebm[sample_ind], max_display=14)
 
 
-# In[10]:
+# In[11]:
 
 
 # the waterfall_plot shows how we get from explainer.expected_value to model.predict(X)[sample_ind]
@@ -196,7 +196,7 @@ shap.plots.beeswarm(shap_values_ebm, max_display=14)
 # <a id="boosted_tree"></a>
 # ## Explaining a non-additive boosted tree model
 
-# In[11]:
+# In[12]:
 
 
 # train XGBoost model
@@ -215,13 +215,13 @@ fig,ax = shap.partial_dependence_plot(
 )
 
 
-# In[12]:
+# In[13]:
 
 
 shap.plots.scatter(shap_values_xgb[:,"RM"])
 
 
-# In[13]:
+# In[14]:
 
 
 shap.plots.scatter(shap_values_xgb[:,"RM"], color=shap_values)
@@ -230,7 +230,7 @@ shap.plots.scatter(shap_values_xgb[:,"RM"], color=shap_values)
 # <a id="logistic_regression"></a>
 # ## Explaining a linear logistic regression model
 
-# In[14]:
+# In[15]:
 
 
 # a classic adult census dataset price dataset
@@ -249,7 +249,7 @@ def model_adult_log_odds(x):
 
 # Note that explaining the probability of a linear logistic regression model is not linear in the inputs.
 
-# In[15]:
+# In[16]:
 
 
 # make a standard partial dependence plot
@@ -262,7 +262,7 @@ fig,ax = shap.partial_dependence_plot(
 
 # If we use SHAP to explain the probability of a linear logistic regression model we see strong interaction effects. This is because a linear logistic regression model NOT additive in the probability space.
 
-# In[16]:
+# In[17]:
 
 
 # compute the SHAP values for the linear model
@@ -271,7 +271,7 @@ explainer = shap.Explainer(model_adult_proba, background_adult)
 shap_values_adult = explainer(X_adult[:1000])
 
 
-# In[17]:
+# In[18]:
 
 
 shap.plots.scatter(shap_values_adult[:,"Age"])
@@ -279,7 +279,7 @@ shap.plots.scatter(shap_values_adult[:,"Age"])
 
 # If we instead explain the log-odds output of the model we see a perfect linear relationship between the models inputs and the model's outputs. It is important to remember what the units are of the model you are explaining, and that explaining different model outputs can lead to very different views of the model's behavior.
 
-# In[18]:
+# In[19]:
 
 
 # compute the SHAP values for the linear model
@@ -287,13 +287,13 @@ explainer_log_odds = shap.Explainer(model_adult_log_odds, background_adult)
 shap_values_adult_log_odds = explainer_log_odds(X_adult[:1000])
 
 
-# In[19]:
+# In[20]:
 
 
 shap.plots.scatter(shap_values_adult_log_odds[:,"Age"])
 
 
-# In[20]:
+# In[21]:
 
 
 # make a standard partial dependence plot
@@ -307,7 +307,7 @@ fig,ax = shap.partial_dependence_plot(
 # <a id="non_additive_logistic"></a>
 # ## Explaining a non-additive boosted tree logistic regression model
 
-# In[21]:
+# In[22]:
 
 
 # train XGBoost model
@@ -323,15 +323,15 @@ shap_values.display_data = shap.datasets.adult(display=True)[0].values
 
 # By default a SHAP bar plot will take the mean absolute value of each feature over all the instances (rows) of the dataset.
 
-# In[22]:
+# In[23]:
 
 
 shap.plots.bar(shap_values)
 
 
-# But the mean absolute value is not the only way to create a global measure of feature importance, we can use any number of transforms. Here we show how using the max absolute value highights the Capital Gain and Capital Loss features, since they have infrewuent but high magnitude effects.
+# But the mean absolute value is not the only way to create a global measure of feature importance, we can use any number of transforms. Here we show how using the max absolute value highights the Capital Gain and Capital Loss features, since they have infrequent but high magnitude effects.
 
-# In[23]:
+# In[25]:
 
 
 shap.plots.bar(shap_values.abs.max(0))
@@ -339,7 +339,7 @@ shap.plots.bar(shap_values.abs.max(0))
 
 # If we are willing to deal with a bit more complexity we can use a beeswarm plot to summarize the entire distribution of SHAP values for each feature.
 
-# In[24]:
+# In[26]:
 
 
 shap.plots.beeswarm(shap_values)
@@ -347,37 +347,37 @@ shap.plots.beeswarm(shap_values)
 
 # By taking the absolute value and using a solid color we get a compromise between the complexity of the bar plot and the full beeswarm plot. Note that the bar plots above are just summary statistics from the values shown in the beeswarm plots below.
 
-# In[25]:
+# In[27]:
 
 
 shap.plots.beeswarm(shap_values.abs, color="shap_red")
 
 
-# In[26]:
+# In[28]:
 
 
 shap.plots.heatmap(shap_values[:1000])
 
 
-# In[27]:
+# In[29]:
 
 
 shap.plots.scatter(shap_values[:,"Age"])
 
 
-# In[28]:
+# In[30]:
 
 
 shap.plots.scatter(shap_values[:,"Age"], color=shap_values)
 
 
-# In[29]:
+# In[31]:
 
 
 shap.plots.scatter(shap_values[:,"Age"], color=shap_values[:,"Capital Gain"])
 
 
-# In[30]:
+# In[32]:
 
 
 shap.plots.scatter(shap_values[:,"Relationship"], color=shap_values)
@@ -386,25 +386,25 @@ shap.plots.scatter(shap_values[:,"Relationship"], color=shap_values)
 # <a id="correlated_features"></a>
 # ## Dealing with correlated features
 
-# In[31]:
+# In[33]:
 
 
 clustering = shap.utils.hclust(X_adult, y_adult)
 
 
-# In[32]:
+# In[34]:
 
 
 shap.plots.bar(shap_values, clustering=clustering)
 
 
-# In[33]:
+# In[35]:
 
 
 shap.plots.bar(shap_values, clustering=clustering, clustering_cutoff=0.8)
 
 
-# In[34]:
+# In[36]:
 
 
 shap.plots.bar(shap_values, clustering=clustering, clustering_cutoff=1.8)
@@ -415,7 +415,7 @@ shap.plots.bar(shap_values, clustering=clustering, clustering_cutoff=1.8)
 # 
 # This demonstrates how SHAP can be applied to complex model types with highly structured inputs.
 
-# In[35]:
+# In[37]:
 
 
 import transformers

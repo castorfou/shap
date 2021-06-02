@@ -7,3 +7,6 @@ conda install -c conda-forge jupyter
 conda install -c conda-forge xgboost catboost lightgbm
 conda install -c conda-forge matplotlib
 pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org interpret
+conda install --no-update-deps -c conda-forge graphviz
+conda install python-graphviz
+conda install -c conda-forge econml
