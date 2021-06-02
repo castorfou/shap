@@ -1,0 +1,9 @@
+conda remove --name shap --all
+conda create --name shap python=3.7
+
+conda activate shap
+conda install --no-update-deps -c conda-forge shap
+conda install -c conda-forge jupyter
+conda install -c conda-forge xgboost catboost lightgbm
+conda install -c conda-forge matplotlib
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org interpret

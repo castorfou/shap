@@ -1,0 +1,12 @@
+name: shap
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - shap
+  - jupyter
+  - catboost
+  - lightgbm
+  - xgboost
+  - matplotlib
+prefix: /home/guillaume/anaconda3/envs/shap
